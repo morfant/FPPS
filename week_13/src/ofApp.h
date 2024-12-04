@@ -37,7 +37,5 @@ class ofApp : public ofBaseApp{
         vector<Circle*> circles;
     
         ofVec2f gravity;
-        ofVec2f mousePos;
-    
             
 };

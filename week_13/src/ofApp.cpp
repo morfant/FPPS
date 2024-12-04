@@ -1,5 +1,8 @@
 #include "ofApp.h"
 
+// Circle의 static 멤버 함수 초기화
+float Circle::TOP_SPEED = 20.f;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     // 원을 몇개의 직선으로 그릴 것인가
@@ -7,6 +10,9 @@ void ofApp::setup(){
     
     // 초당 몇 프레임씩 그릴 것인가
     ofSetFrameRate(60);
+    
+//    ofSetBackgroundAuto(false);
+//    ofBackground(255);
     
     // 윈도우의 가로, 세로 길이
     w = ofGetWidth();
@@ -16,19 +22,17 @@ void ofApp::setup(){
     pos_x = w / 2;
     pos_y = h / 2;
     
+    // 중앙의 동그라미의 반지름
     radius = 100;
     
-    // x, y 축 방향 속도
-    speed_x = 3.0;
-    speed_y = 3.0;
-    
+    // 중력
     gravity = ofVec2f(0, 2);
     
     // 마우스 포인터가 원 안에 위치했는가?
     isOn = false;
     
     // 10개의 Circle 객체를 생성
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 10; i++)
     {
         ofColor col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
         ofVec2f p = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
@@ -40,8 +44,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-    mousePos = ofVec2f(ofGetMouseX(), ofGetMouseY());
     
     // 원의 중심점으로부터 마우스 포인터까지의 거리
     float d = ofDist(pos_x, pos_y, ofGetMouseX(), ofGetMouseY());
@@ -59,6 +61,9 @@ void ofApp::update(){
         isClickedL = false;
     }
     
+    // 마우스 포인터의 위치를 2차원 벡터로 만들기
+    ofVec2f mv = ofVec2f(ofGetMouseX(), ofGetMouseY());
+    
     for (auto it = circles.begin(); it != circles.end();)
     {
         auto c = *it;
@@ -70,14 +75,14 @@ void ofApp::update(){
         }
         else
         {
-            if (isClickedR) c->pulled(mousePos);
+            c->pulled(mv);
             c->applyForce(gravity);
             c->update();
             it++;
         }
     }
-    
 }
+
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -94,17 +99,17 @@ void ofApp::draw(){
     rex = ofRandom(w);
     rey = ofRandom(h);
     
+    // 선 그리기
     ofSetColor(0);
     ofSetLineWidth(2);
     ofDrawLine(rbx, rby, rex, rey);
     
-    
-    // 움직이는 원
+    // 화면 가운데 동그라미
     ofSetColor(0, 0, 255);
     if (isOn) ofSetColor(200, 100, 50, 50);
     ofDrawCircle(pos_x, pos_y, radius);
     
-    
+    // circles의 객체들 그리기
     for (auto & c : circles)
     {
         c->draw();
@@ -148,18 +153,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == 0) {
-        isClickedL = true;
-    } else if (button == 2) {
-        isClickedR = true;
-    }
+    if (button == 0) {isClickedL = true;}
 
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     if (button == 0) {isClickedL = false;}
-    else if (button == 2) {isClickedR = false;}
 }
 
 //--------------------------------------------------------------

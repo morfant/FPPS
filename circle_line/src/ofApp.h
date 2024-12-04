@@ -24,19 +24,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
     
-        int w, h;
-        
-        int pos_x, pos_y;
-        int radius;
-        int lw;
-        float speed_x, speed_y;
-        
-        bool isOn;
-        bool isClickedL = false;
-        bool isClickedR = false;
-    
         vector<Circle*> circles;
     
-        ofVec2f gravity;
-            
+        bool isClicked = false;
+		
 };
