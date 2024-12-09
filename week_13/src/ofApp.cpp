@@ -7,12 +7,11 @@ float Circle::TOP_SPEED = 20.f;
 void ofApp::setup(){
     // 원을 몇개의 직선으로 그릴 것인가
     ofSetCircleResolution(40);
+    ofEnableAlphaBlending();
+    ofSetBackgroundAuto(false);
     
     // 초당 몇 프레임씩 그릴 것인가
     ofSetFrameRate(60);
-    
-//    ofSetBackgroundAuto(false);
-//    ofBackground(255);
     
     // 윈도우의 가로, 세로 길이
     w = ofGetWidth();
@@ -87,7 +86,8 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofBackground(255);
+    ofSetColor(255, 180);
+    ofDrawRectangle(0, 0, w, h);
     
     float rbx, rby, rex, rey;
     

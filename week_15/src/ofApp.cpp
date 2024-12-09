@@ -69,7 +69,7 @@ void ofApp::update(){
         for (int y = 0; y < num_y; y++)
         {
             int idx = x + (num_x * y);
-            float noiseValue = ofNoise(x * 0.1, y * 0.1);
+            float noiseValue = ofNoise(x * 0.05, y * 0.05);
             ofVec3f p = mesh.getVertex(idx);
             
             p.z = noiseValue * 200.f;

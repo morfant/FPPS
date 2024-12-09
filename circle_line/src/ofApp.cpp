@@ -9,13 +9,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-    if (isClicked == true)
-    {
-        Circle* c = new Circle(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-        circles.push_back(c);
-        isClicked = false;
-    }
 
 }
 
@@ -26,7 +19,7 @@ void ofApp::draw(){
     for (auto & c : circles)
     {
         c->draw();
-        if (pc) {
+        if (pc != nullptr) {
             ofSetColor(0);
             ofDrawLine(pc->getPos(), c->getPos());
         }
@@ -68,12 +61,15 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == 0) {isClicked = true;}
+    if (button == 0) {
+        Circle* c = new Circle(ofVec2f(ofGetMouseX(), ofGetMouseY()));
+        circles.push_back(c);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == 0) {isClicked = false;}
+//    if (button == 0) {isClicked = false;}
 }
 
 //--------------------------------------------------------------

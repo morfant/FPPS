@@ -15,6 +15,7 @@ class Circle {
     
 private:
     ofVec2f pos;
+    float count;
     float radius;
     ofColor color;
     
