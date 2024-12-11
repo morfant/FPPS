@@ -51,14 +51,14 @@ void ofApp::update(){
     if (d < radius) isOn = true;
     else isOn = false;
     
-    if (isClickedL == true)
-    {
-        ofColor col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-        ofVec2f p = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
-        Circle* c = new Circle(p, ofRandom(30, 100), col);
-        circles.push_back(c);
-        isClickedL = false;
-    }
+//    if (isClickedL == true)
+//    {
+//        ofColor col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+//        ofVec2f p = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
+//        Circle* c = new Circle(p, ofRandom(30, 100), col);
+//        circles.push_back(c);
+//        isClickedL = false;
+//    }
     
     // 마우스 포인터의 위치를 2차원 벡터로 만들기
     ofVec2f mv = ofVec2f(ofGetMouseX(), ofGetMouseY());
@@ -123,8 +123,7 @@ void ofApp::exit(){
     
     for (auto it = circles.begin(); it != circles.end(); it++)
     {
-        auto c = *it;
-        delete c;
+        delete *it;
     }
     
     cout << "Dynamic memory is released." << endl;
@@ -153,13 +152,17 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == 0) {isClickedL = true;}
-
+    if (button == 0) {
+        ofColor col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+        ofVec2f p = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
+        Circle* c = new Circle(p, ofRandom(30, 100), col);
+        circles.push_back(c);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == 0) {isClickedL = false;}
+//    if (button == 0) {isClickedL = false;}
 }
 
 //--------------------------------------------------------------

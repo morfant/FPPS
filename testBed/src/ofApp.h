@@ -7,6 +7,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+        void exit();
 		
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -27,6 +28,8 @@ class ofApp : public ofBaseApp{
     int num_y = 32;
     float width, height;
     float step_x, step_y;
+    float offset_x = 0;
+    float step = 0;
     
     int gl_mode = 0;
     int prev_gl_mode = -1;

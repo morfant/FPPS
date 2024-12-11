@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetDepthTest(true);
+//    glShadeModel(GL_FLAT);
     width = ofGetWidth();
     height = ofGetHeight();
     step_x = width / num_x;
@@ -69,7 +70,7 @@ void ofApp::update(){
         for (int y = 0; y < num_y; y++)
         {
             int idx = x + (num_x * y);
-            float noiseValue = ofNoise(x * 0.1, y * 0.1);
+            float noiseValue = ofNoise(x * 0.1, offset_x + y * 0.1);
             ofVec3f p = mesh.getVertex(idx);
             
             p.z = noiseValue * 200.f;
@@ -78,6 +79,8 @@ void ofApp::update(){
             mesh.setVertex(idx, p);
         }
     }
+    
+    offset_x += step;
 
 }
 
@@ -135,6 +138,12 @@ void ofApp::draw(){
     
 }
 
+void ofApp::exit()
+{
+    cout << "Bye.." << endl;
+    
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
@@ -155,7 +164,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
-    
+    step = ofMap(y, 0, height, 0.01, 0.2);
 }
 
 //--------------------------------------------------------------
