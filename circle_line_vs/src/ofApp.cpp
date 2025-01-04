@@ -3,7 +3,11 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(255);
-    
+
+    char ch = 'a';
+    int i = 32767;
+    double darr[10];
+    printf("%p, %p, %p\n", &ch, &i, darr);
 
 }
 

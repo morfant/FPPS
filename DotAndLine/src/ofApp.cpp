@@ -1,44 +1,37 @@
 #include "ofApp.h"
 
-int width, height;
-int posX, posY;
-int velX, velY;
-int radius = 100;
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-	ofSetFrameRate(30);
-	ofBackground(255);
-	ofSetBackgroundAuto(true);
-	ofSetCircleResolution(40);
+p1 = new Dot(100, 200);
+p2 = new Dot(300, 500);
+line = new Line(p1, p2);
 
-	width = ofGetWidth();
-	height = ofGetHeight();
-
-	posX = width * 0.5;
-	posY = height * 0.5;
-
-	velX = -5;
-	velY = 10;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	posX = posX + velX;
-	posY = posY + velY;
-
-	if (posX > width + radius) { posX = -radius; }
-	if (posY > height + radius) { posY = -radius; }
-
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofBackground(255);
 
-	ofSetColor(110, 50, 80);
-	ofDrawCircle(posX, posY, radius);
+	p1->draw();
+	p2->draw();
+
+	line->draw();
+
+}
+
+//--------------------------------------------------------------
+void ofApp::exit()
+{
+	delete p1, p2;
+	delete line;
 }
 
 //--------------------------------------------------------------
