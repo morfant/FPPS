@@ -1,61 +1,69 @@
 #include "ofApp.h"
 
+int width, height;
+int posX, posY;
+int velX, velY;
+int radius = 100;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
 
-    ofSetBackgroundAuto(false);
-    ofBackground(255);
+	ofSetFrameRate(30);
+	ofBackground(255);
+	ofSetBackgroundAuto(true);
+	ofSetCircleResolution(40);
 
-    width = ofGetWidth();
-    height = ofGetHeight();
+	width = ofGetWidth();
+	height = ofGetHeight();
+
+	posX = width * 0.5;
+	posY = height * 0.5;
+
+	velX = -5;
+	velY = 10;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
+	posX = posX + velX;
+	posY = posY + velY;
+
+	if (posX > width + radius) { posX = -radius; }
+	if (posY > height + radius) { posY = -radius; }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(255, 1);
-    ofDrawRectangle(0, 0, width, height);
 
-    //ofSetColor(ofRandom(255));
-    //ofDrawCircle(ofRandom(width), ofRandom(height), ofRandom(50));
-
-    ofSetColor(ofRandom(150), 100, 150, ofRandom(50, 200));
-    ofDrawLine(ofRandom(width), ofRandom(height), ofRandom(width), ofRandom(height));
-
-}
-
-void ofApp::exit()
-{
+	ofSetColor(110, 50, 80);
+	ofDrawCircle(posX, posY, radius);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    
+
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
+void ofApp::mouseMoved(int x, int y ){
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -65,25 +73,25 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
-    
+
 }
