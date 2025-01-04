@@ -1,13 +1,18 @@
 #include "ofApp.h"
+#include "Dot.h"
 
 
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-p1 = new Dot(100, 200);
-p2 = new Dot(300, 500);
-line = new Line(p1, p2);
+    width = ofGetWidth();
+    height = ofGetHeight();
+    
+    for (int i = 0; i < 10; i++)
+    {
+        dots.push_back(new Dot(ofRandom(width), ofRandom(height), ofRandom(500)));
+    }
 
 }
 
@@ -20,22 +25,33 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(255);
 
-	p1->draw();
-	p2->draw();
-
-	line->draw();
+    cam.begin();
+    for (auto & l : lines)
+    {
+        l.draw();
+    }
+    cam.end();
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit()
 {
-	delete p1, p2;
-	delete line;
+    for (auto & d : dots)
+    {
+        delete d;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == ' ')
+    {
+        int rb = ofRandom(9);
+        int re = ofRandom(9);
+        lines.push_back(*dots[rb] + dots[re]);
+    }
+
 
 }
 
@@ -56,7 +72,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Line.h"
+#include "Dot.h"
 
 class ofApp : public ofBaseApp{
 
@@ -23,9 +24,13 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+    
+    
+    int width, height;
+    vector<Dot*> dots;
+    vector<Line> lines;
+    
+    ofEasyCam cam;
 
-		Dot* p1;
-		Dot* p2;
-		Line* line;
 		
 };
