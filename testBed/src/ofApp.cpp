@@ -4,6 +4,7 @@
 void ofApp::setup(){
     ofSetDepthTest(true);
 //    glShadeModel(GL_FLAT);
+    ofSetFrameRate(60);
     width = ofGetWidth();
     height = ofGetHeight();
     step_x = width / num_x;
@@ -15,8 +16,6 @@ void ofApp::setup(){
 //    float offsetX = 0;
 //    float offsetY = 0;
 
-    // ofMesh가 사용하는 좌표계의 원점은 left-bottom
-    // y값이 증가하면 좌표계 상 위치가 아래에서 위로 이동한다
     // 가로축을 모두 채웠을 때 세로축으로 한 줄 이동
     for (int y = 0; y < num_y; y++) {
         for (int x = 0; x < num_x; x++) {
@@ -70,6 +69,7 @@ void ofApp::update(){
         for (int y = 0; y < num_y; y++)
         {
             int idx = x + (num_x * y);
+            //float noiseValue = ofNoise(x * 0.1, offset_x + y * 0.1, ofGetElapsedTimef() * 0.1);
             float noiseValue = ofNoise(x * 0.1, offset_x + y * 0.1);
             ofVec3f p = mesh.getVertex(idx);
             
@@ -164,7 +164,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
-    step = ofMap(y, 0, height, 0.01, 0.2);
+    step = ofMap(y, 0, height, 0.001, 0.01);
 }
 
 //--------------------------------------------------------------
@@ -174,13 +174,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-//    if (button == 0) change_step = 0.1;
     
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-//    if (button == 0) change_step = 0.001;
 
 }
 
