@@ -1,88 +1,108 @@
 #include "ofApp.h"
 
-int width, height;
 int posX, posY;
-int velX, velY;
-int radius = 100;
-bool isInside = false;
+float step;
+int WIDTH, HEIGHT;
+float radius;
+
+enum class DIRECTION
+{
+	NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST
+};
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
 	ofSetFrameRate(30);
+	ofSetBackgroundAuto(false);
 	ofBackground(255);
-	ofSetBackgroundAuto(true);
-	ofSetCircleResolution(40);
 
-	width = ofGetWidth();
-	height = ofGetHeight();
+	WIDTH = ofGetWidth();
+	HEIGHT = ofGetHeight();
 
-	posX = width * 0.5;
-	posY = height * 0.5;
+	posX = ofRandom(WIDTH);
+	posY = ofRandom(HEIGHT);
+	radius = 1;
+	step = 1;
 
-	velX = 10;
-	velY = 15;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
-	float dx = posX - ofGetMouseX();
-	float dy = posY - ofGetMouseY();
-	float dd = (dx * dx) + (dy * dy);
-
-	float rr = radius * radius;
-	if (dd < rr)
-	{
-		isInside = true;
-	}
-	else
-	{
-		isInside = false;
-	}
-
-
-	// Flowing
-	//if (posX > width + radius) { posX = -radius; }
-	//else if (posX < 0 - radius) { posX = width + radius; }
-
-	//if (posY > height + radius) { posY = -radius; }
-	//else if (posY < 0 - radius) { posY = height + radius; }
-
-	if (posX >= width - radius)
-	{
-		posX = width - radius;
-		velX = velX * -1;
-	}
-	else if (posX <= radius)
-	{
-		posX = radius;
-		velX = velX * -1;
-	}
-
-	if (posY >= height - radius)
-	{
-		posY = height - radius;
-		velY = velY * -1; // velY *= -1
-	}
-	else if (posY <= radius)
-	{
-		posY = radius;
-		velY = velY * -1;
-	}
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	if (isInside) ofSetColor(110, 50, 80);
-	else ofSetColor(0);
-	ofDrawCircle(posX, posY, radius);
+	int mx = ofMap(ofGetMouseX(), 0, WIDTH, 0, 400, true);
+
+	for (int i = 0; i < mx; i++)
+	{
+		int r = rand() % 8;
+		DIRECTION dir = (DIRECTION)r;
+
+		switch (dir) {
+		case DIRECTION::NORTH:
+			posY = posY - step;
+			break;
+
+		case DIRECTION::NORTH_EAST:
+			posY = posY - step;
+			posX = posX + step;
+			break;
+
+		case DIRECTION::EAST:
+			posX = posX + step;
+			break;
+
+		case DIRECTION::SOUTH_EAST:
+			posX = posX + step;
+			posY = posY + step;
+			break;
+
+		case DIRECTION::SOUTH:
+			posY = posY + step;
+			break;
+
+		case DIRECTION::SOUTH_WEST:
+			posY = posY + step;
+			posX = posX - step;
+			break;
+
+		case DIRECTION::WEST:
+			posX = posX - step;
+			break;
+
+		case DIRECTION::NORTH_WEST:
+			posX = posX - step;
+			posY = posY - step;
+			break;
+
+		default:
+			break;
+		};
+
+		if (posX > WIDTH || posX < 0 || posY > HEIGHT || posY < 0)
+		{
+			posX = ofRandom(WIDTH);
+			posY = ofRandom(HEIGHT);
+		}
+
+		ofSetColor(0, 255);
+		ofDrawCircle(posX, posY, radius);
+	}
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
+	if (key == 's' || key == 'S')
+	{
+		cout << "Screen saved." << endl;
+		ofSaveScreen("screenSave.png");
+	}
 
 }
 
@@ -93,7 +113,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	
+
 }
 
 //--------------------------------------------------------------
