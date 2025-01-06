@@ -11,7 +11,7 @@ void ofApp::setup(){
     
     for (int i = 0; i < 10; i++)
     {
-        dots.push_back(new Dot(ofRandom(width), ofRandom(height), ofRandom(500)));
+        dots.push_back(new Dot(ofRandom(-width/2, width/2), ofRandom(-height/2, height/2), ofRandom(500)));
     }
 
 }
