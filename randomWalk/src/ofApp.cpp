@@ -100,6 +100,7 @@ void ofApp::keyPressed(int key){
 
 	if (key == 's' || key == 'S')
 	{
+		glReadBuffer(GL_FRONT);
 		cout << "Screen saved." << endl;
 		ofSaveScreen("screenSave.png");
 	}
