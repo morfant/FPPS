@@ -1,14 +1,21 @@
 #include "ofApp.h"
 
+int step;
+int numX, numY;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
-
-    ofSetBackgroundAuto(false);
+    ofSetCircleResolution(42);
+    //ofSetBackgroundAuto(false);
     ofBackground(255);
 
     width = ofGetWidth();
     height = ofGetHeight();
+
+    numX = 20;
+    numY = 20;
+    step = width / numX;
 }
 
 //--------------------------------------------------------------
@@ -18,14 +25,16 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(255, 1);
-    ofDrawRectangle(0, 0, width, height);
 
-    //ofSetColor(ofRandom(255));
-    //ofDrawCircle(ofRandom(width), ofRandom(height), ofRandom(50));
+    int mx = ofGetMouseX();
+    ofNoFill();
+    for (int i = 0; i < numY; i++) {
+        for (int j = 0; j < numX; j++) {
+            ofSetColor(0);
+            ofDrawCircle(i * step + step * 0.5, j * step + step * 0.5, mx);
+        }
+    }
 
-    ofSetColor(ofRandom(150), 100, 150, ofRandom(50, 200));
-    ofDrawLine(ofRandom(width), ofRandom(height), ofRandom(width), ofRandom(height));
 
 }
 

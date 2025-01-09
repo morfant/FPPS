@@ -1,7 +1,8 @@
 #pragma once
 #include "ofMain.h"
+#include "Shape.h"
 
-class Dot
+class Dot : public Shape
 {
 
 private:
@@ -19,14 +20,19 @@ public:
 
 	void draw()
 	{
-		ofSetColor(142, 85, 114);
+		ofSetHexColor(hexCol);
 		ofDrawCircle(posX, posY, radius);
-	}
+	};
 
-	float getRadius() { return radius; }
-	int getX() { return posX; }
-	int getY() { return posY; }
+	int getX()
+	{
+		return posX;
+	};
 
+	int getY()
+	{
+		return posY;
+	};
 
 };
 

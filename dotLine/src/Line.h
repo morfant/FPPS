@@ -3,7 +3,7 @@
 #include "Dot.h"
 
 
-class Line {
+class Line : public Shape {
 
 private:
 	Dot begin, end;
@@ -18,7 +18,7 @@ public:
 
 	void draw()
 	{
-		ofSetColor(187, 190, 100);
+		ofSetHexColor(hexCol);
 		ofDrawLine(begin.getX(), begin.getY(), end.getX(), end.getY());
 	}
 
