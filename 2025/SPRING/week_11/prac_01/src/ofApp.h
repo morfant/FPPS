@@ -1,6 +1,55 @@
 #pragma once
 
 #include "ofMain.h"
+#define MAX_NUM 20000 
+
+class Dot{
+
+	private:
+		float posX, posY;
+		float radius;
+
+	public:
+		Dot() {};
+		Dot(float x, float y, float r)
+		{
+			posX = x;
+			posY = y;
+			radius = r;
+		}
+
+		void draw()
+		{
+			ofNoFill();
+			ofSetColor(255, 255, 255);
+			ofDrawCircle(posX, posY, radius);
+		}
+
+		float operator-(Dot other)
+		{
+			return ofDist(posX, posY, other.posX, other.posY);
+		}
+
+		// void operator+ (Dot other)
+		// {
+		// 	radius = radius + other.radius;
+		// }
+
+		Dot operator+ (Dot other)
+		{
+			return Dot(other.posX + posX, other.posY + posY, radius + other.radius);
+		}
+
+		void operator+ (float f)
+		{
+			radius = radius + f;
+		}
+
+
+
+
+
+};
 
 class ofApp : public ofBaseApp{
 
@@ -22,6 +71,13 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h) override;
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
-    
-	    int width, height;
+
+		int width, height;
+
+		Dot* d1;
+		Dot* d2;
+		Dot d3;
+
+		Dot* dots[MAX_NUM];
+		
 };

@@ -1,10 +1,31 @@
-# 모든 파일을 무시
+# Ignore all files by default
 *
 
-# 디렉토리는 무시하지 않음
+# Allow all directories (so we can selectively include content)
 !*/
 
-# src 디렉토리와 그 내용은 포함
+# Allow only src/ directory and its contents
 !**/src/
 !**/src/**
+
+# Ignore object files and other build artifacts
 *.obj
+*.o
+*.lo
+*.la
+*.al
+*.gch
+*.d
+
+# Ignore build folders
+obj/
+bin/
+
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
+
+# Visual Studio specific (optional)
+*.vcxproj.user
+*.suo
+*.user

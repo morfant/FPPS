@@ -1,14 +1,24 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(10);
-    ofSetBackgroundAuto(false);
+
+    ofSetFrameRate(60);
     ofSetCircleResolution(32);
-    ofBackground(255);
 
     width = ofGetWidth();
     height = ofGetHeight();
+
+    for (int i = 0; i < MAX_NUM; i++)
+    {
+        dots[i] = new Dot(ofRandom(width), ofRandom(height), ofRandom(1, 3));
+    } 
+    // d1 = new Dot(100, 100, 10);
+    // d2 = new Dot(400, 200, 50);
+    // d3 = (*d2) + (*d1);
+
+
 }
 
 //--------------------------------------------------------------
@@ -19,25 +29,24 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    if (ofGetMousePressed())
-    {
-        ofBackground(255);
-    }
-    
-    int cx = ofRandom(width);
-    int cy = ofRandom(height);
-    
-    float radius = ofRandom(20, 50);
-    
-    // ofNoFill();
-    ofSetColor(0, 40);
+    ofBackground(0);
 
-    int step = 2;
-    int numOfCircles = radius / step;
+    // d1.draw();
+    // d2.draw();
 
-    for (int i = 0; i < numOfCircles; i++)
+    // float dist = d1 - d2;
+    // ofDrawBitmapStringHighlight("Distance from d1 to d2: " + ofToString(dist, 2), 10, 20);
+
+    ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 20);
+
+    // d1 + d2;
+    // d1 + 0.1;
+    // d3.draw();
+
+
+    for (int i = 0; i < MAX_NUM; i++)
     {
-        ofDrawCircle(cx, cy, (i + 1) * step);
+        dots[i]->draw();
     }
 
 
@@ -45,6 +54,13 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
+
+    for (int i = 0; i < MAX_NUM; i++)
+    {
+        delete dots[i];
+    }
+
+
 
 }
 

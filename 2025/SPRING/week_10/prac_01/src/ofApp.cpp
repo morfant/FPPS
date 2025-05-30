@@ -2,13 +2,22 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(10);
-    ofSetBackgroundAuto(false);
+
     ofSetCircleResolution(32);
-    ofBackground(255);
+    ofSetFrameRate(30);
 
     width = ofGetWidth();
     height = ofGetHeight();
+
+    for (int i = 0; i < NUM_OF_CIRCLE; i++)
+    {
+        circles[i] = Circle(
+            ofRandom(width),
+            ofRandom(height),
+            ofRandom(50, 120)
+        );
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -19,33 +28,17 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    if (ofGetMousePressed())
+    ofBackground(255);
+
+    for (int i = 0; i < NUM_OF_CIRCLE; i++)
     {
-        ofBackground(255);
+        circles[i].draw();
     }
-    
-    int cx = ofRandom(width);
-    int cy = ofRandom(height);
-    
-    float radius = ofRandom(20, 50);
-    
-    // ofNoFill();
-    ofSetColor(0, 40);
-
-    int step = 2;
-    int numOfCircles = radius / step;
-
-    for (int i = 0; i < numOfCircles; i++)
-    {
-        ofDrawCircle(cx, cy, (i + 1) * step);
-    }
-
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-
 }
 
 //--------------------------------------------------------------
