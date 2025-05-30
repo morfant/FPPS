@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#define NUM 100
+#define NUM 50
 
 
 class Shape {
@@ -33,8 +33,6 @@ class Circle : public Shape {
 		float speedX, speedY;
 		float posX, posY;
 		float radius;
-		int lifeSpan;
-		float age;
 
 
 	public:
@@ -61,30 +59,25 @@ class Circle : public Shape {
 			speedX = vx;
 			speedY = vy;
 			radius = rad;
-			lifeSpan = radius;
-			age = 0;
-
-			col = ofColor(ofRandom(100, 120), ofRandom(180, 200), ofRandom(200, 240), 50);
+			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 			colChanged = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
+
+		~Circle() {cout << "A Circle object is destroyed!" << endl;}
 
 
 		void update()
 		{
-
-			// if (isMouseTouched())
-			// {
-			// 	hide();
-			// } else {
-			// 	unHide();
-			// }
+			if (isMouseTouched())
+			{
+				hide();
+			} else {
+				unHide();
+			}
 
 			// make move
 			posX += speedX;
 			posY += speedY;
-
-			age += 0.1;
-			radius = lifeSpan - age;
 
 			// reappear from the opposite side
 			if (posX - radius >= width) { posX = 0 - radius; }
@@ -93,17 +86,13 @@ class Circle : public Shape {
 			if (posY - radius >= height) { posY = 0 - radius; }
 			else if (posY + radius <= 0) { posY = height + radius; }
 
-		}
 
-		int toDie()
-		{
-			if (age > lifeSpan) { return 1; }
-			else { return 0; }
 		}
 
 		void draw()
 		{
 			ofFill();
+
 			ofSetColor(col);
 
 			// if (isMouseTouched())
@@ -154,6 +143,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg) override;
 
 		int width, height;
-		vector<Circle*> circles;
+		Circle* circles[NUM];
 
 };

@@ -17,13 +17,11 @@ void ofApp::setup(){
 
     for (int i = 0; i < NUM; i++)
     {
-		Circle* c = new Circle(
+        circles[i] = new Circle(
 			ofRandom(width), ofRandom(height), // posX, posY
 			ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
-			ofRandom(10, 10) // radius
-		);
-
-		circles.push_back(c);
+			ofRandom(40, 120)
+		); // radius
     }
 
 }
@@ -31,57 +29,10 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	if (ofGetMousePressed())
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			Circle* c = new Circle(
-				ofGetMouseX(), ofGetMouseY(), // posX, posY
-				ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
-				ofRandom(10, 10) // radius
-			);
-			circles.push_back(c);
-		}
-
-	}
-
-
-	// Method 1
-    for (auto it = circles.begin(); it != circles.end(); )
+    for (int i = 0; i < NUM; i++)
     {
-		auto c = *it;
-
-		if (c->toDie())
-		{
-			delete c;
-			it = circles.erase(it);
-		}
-		else
-		{
-			c->update();
-			++it;
-		}
+        circles[i]->update();
     }
-
-
-
-	// Method 2
-	// for (int i = 0; i < circles.size(); )
-	// {
-	// 	if (circles[i]->toDie())
-	// 	{
-	// 		delete circles[i];
-	// 		circles[i] = circles.back();
-	// 		circles.pop_back();
-	// 	}
-	// 	else
-	// 	{
-	// 		circles[i]->update();
-	// 		++i;
-	// 	}
-	// }
-
-
 }
 
 //--------------------------------------------------------------
@@ -89,21 +40,17 @@ void ofApp::draw(){
 
     ofBackground(255);
 
-    for (int i = 0; i < circles.size(); i++)
+    for (int i = 0; i < NUM; i++)
     {
         circles[i]->draw();
     }
-
-
-	ofDrawBitmapStringHighlight("Number of circles: " + ofToString(circles.size()), 10, 20);
-	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 40);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
 
-	for (int i = 0; i < circles.size(); i++)
+	for (int i = 0; i < NUM; i++)
 	{
 		delete circles[i];
 	}
