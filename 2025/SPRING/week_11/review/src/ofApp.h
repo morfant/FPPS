@@ -1,40 +1,62 @@
 #pragma once
 
 #include "ofMain.h"
+#define NUM_OF_CCS 50
 
-class Dot {
-
+class ConcentricCircle {
 	private:
 		float posX, posY;
 		float radius;
+		ofColor col;
+		int numOfCircles;
+		int fillMode;
 
 	public:
-		Dot() {};
-		Dot(float x, float y, float r) 
+		ConcentricCircle() {};
+		ConcentricCircle(float x, float y, float r)
 		{
 			posX = x;
 			posY = y;
 			radius = r;
+			col = ofColor(
+				ofRandom(255),
+				ofRandom(255),
+				ofRandom(255)
+			);
+
+			numOfCircles = radius / 8;
 		};
+
+		// Setter
+		void setFillMode(int m)
+		{
+			fillMode = m;
+		}
 
 		void draw()
 		{
-			ofSetColor(255);
-			ofDrawCircle(posX, posY, radius);
+			if (fillMode)
+			{
+				ofFill();
+				col.a = 40;
+				ofSetColor(col);
+			}
+			else 
+			{
+				ofNoFill();
+				col.a = 255;
+				ofSetColor(col);
+			}
+
+			float step = radius / numOfCircles;
+			for (int i = 0; i < numOfCircles; i++)
+			{
+				ofDrawCircle(posX, posY, (i + 1) * step);
+			}
 		}
 
-		// d1 + d2
-		Dot operator+ (Dot other)
-		{
-			return Dot(
-				(posX + other.posX) / 2,
-				(posY + other.posY) / 2,
-				radius + other.radius
-			);
-		}
+}; // Don't forget this!
 
-
-};
 
 class ofApp : public ofBaseApp{
 
@@ -57,9 +79,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
 
+		// ConcentricCircle cc;
 		int width, height;
 
-		Dot d1;
-		Dot d2;
+		ConcentricCircle ccs[NUM_OF_CCS];
 		
 };

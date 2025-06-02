@@ -9,24 +9,33 @@ void ofApp::setup(){
     width = ofGetWidth();
     height = ofGetHeight();
 
-    d1 = Dot(300, 300, 50);
-    d2 = Dot(100, 100, 10);
+    for (int i = 0; i < NUM_OF_CCS; i++)
+    {
+        ccs[i] = ConcentricCircle(
+            ofRandom(width),
+            ofRandom(height),
+            ofRandom(50, 80)
+        );
+    }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
+    for (int i = 0; i < NUM_OF_CCS; i++)
+    {
+        ccs[i].setFillMode(ofGetMousePressed());
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
-    d1.draw();
-    d2.draw();
-
-    Dot d3 = d1 + d2;
-    d3.draw();
+    ofBackground(255);
+    for (int i = 0; i < NUM_OF_CCS; i++)
+    {
+        ccs[i].draw();
+    }
 }
 
 //--------------------------------------------------------------

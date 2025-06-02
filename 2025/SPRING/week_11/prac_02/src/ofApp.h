@@ -4,7 +4,7 @@
 #define NUM_OF_CIRCLE 50 
 
 class Shape {
-	protected: // move members of Circle to Shape
+	protected: 
 		ofColor col, col2;
 
 	public:
@@ -17,17 +17,31 @@ class Shape {
 
 class Circle : public Shape {
 
-	protected:
+	private:
 		float posX, posY;
 		float radius;
+		float speedX, speedY;
 
 	public:
+		static int width;
+		static int height;
+
 		Circle() {}; // Default constructor
 		Circle(float x, float y, float rad)
 		{
 			posX = x;
 			posY = y;
 			radius = rad;
+			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+		}
+		Circle(float x, float y, float rad, float spdX, float spdY)
+		{
+			posX = x;
+			posY = y;
+			radius = rad;
+			speedX = spdX;
+			speedY = spdY;
 			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
@@ -38,22 +52,29 @@ class Circle : public Shape {
 		// Getter
 		float getRadius() { return radius; }
 
+		void update()
+		{
+			posX += speedX;
+			posY += speedY;
+
+			if (posX - radius >= width) { posX = 0 - radius; }
+			else if (posX <= 0 - radius) { posX = width + radius; }
+
+			if (posY - radius >= height) { posY = 0 - radius; }
+			else if (posY <= 0 - radius) { posY = height + radius; }
+
+		}
+
 		void draw()
 		{
-			// if (isMouseTouched()) { ofSetColor(col2); }
-			// else { ofSetColor(col); }
-
 			ofSetColor(col);
-			if (isMouseTouched()) { hide(); }
-			else { unHide(); }
-
 			ofDrawCircle(posX, posY, radius);
 		}
 
 		int isMouseTouched()
 		{
 			float dist = ofDist(posX, posY, ofGetMouseX(), ofGetMouseY());
-			if (dist < radius) { cout<< "in" << endl; return 1; }
+			if (dist < radius) { return 1; }
 			else { return 0; }
 		}
 
@@ -81,7 +102,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
 
-		int width, height;
+		int width_, height_;
 		Circle circles[NUM_OF_CIRCLE];
 		
 };

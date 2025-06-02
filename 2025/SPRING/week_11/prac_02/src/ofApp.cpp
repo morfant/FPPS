@@ -1,37 +1,70 @@
 #include "ofApp.h"
 
+
+// ofGetWidth()/ofGetHeight() only returns a valid value after the window object has been created.
+// However, At this point, the window object may not exist yet,
+// so calling them can lead to an error.
+
+// int Circle::width = ofGetWidth();
+// int Circle::height = ofGetHeight();
+
+// Because of this, it’s common to initialize static variables with temporal value (like 0),
+// and then update them later at an appropriate point
+// for example, inside the setup() function:
+int Circle::width = 0;
+int Circle::height = 0;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 
     ofSetCircleResolution(32);
     ofSetFrameRate(30);
 
-    width = ofGetWidth();
-    height = ofGetHeight();
+    width_ = ofGetWidth();
+    height_ = ofGetHeight();
 
-    d1 = Dot(300, 300, 50);
-    d2 = Dot(100, 100, 10);
+    Circle::width = width_;
+    Circle::height = height_;
+
+    for (int i = 0; i < NUM_OF_CIRCLE; i++)
+    {
+        circles[i] = Circle(
+            ofRandom(width_),
+            ofRandom(height_),
+            ofRandom(50, 80),
+            ofRandom(-5, 5),
+            ofRandom(-5, 5)
+        );
+    }
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
+    for (int i = 0; i < NUM_OF_CIRCLE; i++)
+    {
+        circles[i].update();
+    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
-    d1.draw();
-    d2.draw();
 
-    Dot d3 = d1 + d2;
-    d3.draw();
+    ofBackground(255);
+
+    for (int i = 0; i < NUM_OF_CIRCLE; i++)
+    {
+        circles[i].draw();
+    }
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-
 }
 
 //--------------------------------------------------------------
