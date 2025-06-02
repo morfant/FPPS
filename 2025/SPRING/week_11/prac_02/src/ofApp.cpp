@@ -1,16 +1,5 @@
 #include "ofApp.h"
 
-
-// ofGetWidth()/ofGetHeight() only returns a valid value after the window object has been created.
-// However, At this point, the window object may not exist yet,
-// so calling them can lead to an error.
-
-// int Circle::width = ofGetWidth();
-// int Circle::height = ofGetHeight();
-
-// Because of this, it’s common to initialize static variables with temporal value (like 0),
-// and then update them later at an appropriate point
-// for example, inside the setup() function:
 int Circle::width = 0;
 int Circle::height = 0;
 
@@ -42,7 +31,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
     for (int i = 0; i < NUM_OF_CIRCLE; i++)
     {
         circles[i].update();
@@ -123,6 +111,10 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
+<<<<<<< HEAD
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
+=======
+void ofApp::dragEvent(ofDragInfo dragInfo){
+>>>>>>> 98a19388c68a9bbd8257f49d27e55d54e263438a
 
 }

@@ -27,6 +27,7 @@ void ofApp::draw(){
 
     Dot d3 = d1 + d2;
     d3.draw();
+
 }
 
 //--------------------------------------------------------------
@@ -90,6 +91,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }

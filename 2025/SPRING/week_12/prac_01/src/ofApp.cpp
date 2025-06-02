@@ -1,30 +1,86 @@
 #include "ofApp.h"
 
+int Circle::width = 0;
+int Circle::height = 0;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetCircleResolution(32);
     ofSetFrameRate(30);
+    ofSetCircleResolution(32);
 
     width = ofGetWidth();
     height = ofGetHeight();
 
-    for (int i = 0; i < NUM_OF_CIRCLE; i++)
-    {
-        circles.push_back(
-            Circle(
-                ofRandom(width),
-                ofRandom(height),
-                ofRandom(50, 120)
-            )
-        );
-    }
+	Circle::width = width;
+	Circle::height = height;
 
+    for (int i = 0; i < NUM; i++)
+    {
+		Circle* c = new Circle(
+			ofRandom(width), ofRandom(height), // posX, posY
+			ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
+			ofRandom(10, 10) // radius
+		);
+
+		circles.push_back(c);
+    }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
+	if (ofGetMousePressed())
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			Circle* c = new Circle(
+				ofGetMouseX(), ofGetMouseY(), // posX, posY
+				ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
+				ofRandom(10, 10) // radius
+			);
+			circles.push_back(c);
+		}
+
+	}
+
+
+	// Method 1
+    for (auto it = circles.begin(); it != circles.end(); )
+    {
+		auto c = *it;
+
+		if (c->toDie())
+		{
+			delete c;
+			it = circles.erase(it);
+		}
+		else
+		{
+			c->update();
+			++it;
+		}
+    }
+
+
+
+	// Method 2
+	// for (int i = 0; i < circles.size(); )
+	// {
+	// 	if (circles[i]->toDie())
+	// 	{
+	// 		delete circles[i];
+	// 		circles[i] = circles.back();
+	// 		circles.pop_back();
+	// 	}
+	// 	else
+	// 	{
+	// 		circles[i]->update();
+	// 		++i;
+	// 	}
+	// }
+
 
 }
 
@@ -33,16 +89,24 @@ void ofApp::draw(){
 
     ofBackground(255);
 
-    // for (int i = 0; i < NUM_OF_CIRCLE; i++)
     for (int i = 0; i < circles.size(); i++)
     {
-        circles[i].draw();
+        circles[i]->draw();
     }
+
+
+	ofDrawBitmapStringHighlight("Number of circles: " + ofToString(circles.size()), 10, 20);
+	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 40);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
+
+	for (int i = 0; i < circles.size(); i++)
+	{
+		delete circles[i];
+	}
 
 }
 
@@ -102,6 +166,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }

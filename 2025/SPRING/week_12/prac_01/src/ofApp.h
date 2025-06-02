@@ -1,64 +1,136 @@
 #pragma once
 
 #include "ofMain.h"
-#include <vector>
-#define NUM_OF_CIRCLE 50
+#define NUM 100
+
 
 class Shape {
-	protected: // move members of Circle to Shape
-		ofColor col, col2;
+
+	protected:
+		ofColor col;
+		ofColor colChanged;
+
+		void hide()
+		{
+			col.a = 0;
+			colChanged.a = 0;
+		}
+
+		void unHide()
+		{
+			col.a = 255;
+			colChanged.a = 255;
+		}
 
 	public:
 		Shape() {};
 
-		void hide() { col.a = 0; }
-		void unHide() { col.a = 255; }
-
 };
 
-class Circle : public Shape {
 
+class Circle : public Shape {
 	private:
+		float speedX, speedY;
 		float posX, posY;
 		float radius;
+		int lifeSpan;
+		float age;
+
 
 	public:
-		Circle() {}; // Default constructor
+		static int width;
+		static int height;
+
+		Circle() {}
+
 		Circle(float x, float y, float rad)
 		{
 			posX = x;
 			posY = y;
+			speedX = 1;
+			speedY = 1;
 			radius = rad;
 			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+			colChanged = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
 
-		// Setter
-		void setRadius(float r) { radius = r; }
+		Circle(float x, float y, float vx, float vy, float rad)
+		{
+			posX = x;
+			posY = y;
+			speedX = vx;
+			speedY = vy;
+			radius = rad;
+			lifeSpan = radius;
+			age = 0;
 
-		// Getter
-		float getRadius() { return radius; }
+			col = ofColor(ofRandom(100, 120), ofRandom(180, 200), ofRandom(200, 240), 50);
+			colChanged = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+		}
+
+
+		void update()
+		{
+
+			// if (isMouseTouched())
+			// {
+			// 	hide();
+			// } else {
+			// 	unHide();
+			// }
+
+			// make move
+			posX += speedX;
+			posY += speedY;
+
+			age += 0.1;
+			radius = lifeSpan - age;
+
+			// reappear from the opposite side
+			if (posX - radius >= width) { posX = 0 - radius; }
+			else if (posX + radius <= 0) { posX = width + radius; }
+
+			if (posY - radius >= height) { posY = 0 - radius; }
+			else if (posY + radius <= 0) { posY = height + radius; }
+
+		}
+
+		int toDie()
+		{
+			if (age > lifeSpan) { return 1; }
+			else { return 0; }
+		}
 
 		void draw()
 		{
-			// if (isMouseTouched()) { ofSetColor(col2); }
-			// else { ofSetColor(col); }
-
+			ofFill();
 			ofSetColor(col);
-			if (isMouseTouched()) { hide(); }
-			else { unHide(); }
 
+			// if (isMouseTouched())
+			// {
+			// 	ofSetColor(colChanged);
+			// } else {
+			// 	ofSetColor(col);
+			// }
 			ofDrawCircle(posX, posY, radius);
 		}
 
 		int isMouseTouched()
 		{
+			// cout << "isMouseTouched()" << endl;
 			float dist = ofDist(posX, posY, ofGetMouseX(), ofGetMouseY());
-			if (dist < radius) { return 1; }
-			else { return 0; }
+			if (dist < radius)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 };
+
 
 class ofApp : public ofBaseApp{
 
@@ -81,9 +153,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
 
-
 		int width, height;
-		vector<Circle> circles;
+		vector<Circle*> circles;
 
-		
 };

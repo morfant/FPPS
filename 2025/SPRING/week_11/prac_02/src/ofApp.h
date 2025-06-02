@@ -27,6 +27,7 @@ class Circle : public Shape {
 		static int height;
 
 		Circle() {}; // Default constructor
+
 		Circle(float x, float y, float rad)
 		{
 			posX = x;
@@ -35,6 +36,7 @@ class Circle : public Shape {
 			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
+
 		Circle(float x, float y, float rad, float spdX, float spdY)
 		{
 			posX = x;
@@ -67,7 +69,9 @@ class Circle : public Shape {
 
 		void draw()
 		{
+			ofFill();
 			ofSetColor(col);
+
 			ofDrawCircle(posX, posY, radius);
 		}
 

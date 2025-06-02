@@ -3,22 +3,23 @@
 #include "ofMain.h"
 
 class Dot {
-
 	private:
 		float posX, posY;
 		float radius;
 
 	public:
-		Dot() {};
-		Dot(float x, float y, float r) 
+		Dot() {}
+
+		Dot(float x, float y, float rad)
 		{
 			posX = x;
 			posY = y;
-			radius = r;
-		};
+			radius = rad;
+		}
 
 		void draw()
 		{
+			ofFill();
 			ofSetColor(255);
 			ofDrawCircle(posX, posY, radius);
 		}
@@ -61,5 +62,4 @@ class ofApp : public ofBaseApp{
 
 		Dot d1;
 		Dot d2;
-		
 };
