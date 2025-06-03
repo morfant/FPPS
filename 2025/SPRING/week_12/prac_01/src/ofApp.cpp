@@ -15,71 +15,31 @@ void ofApp::setup(){
 	Circle::width = width;
 	Circle::height = height;
 
-    for (int i = 0; i < NUM; i++)
-    {
-		Circle* c = new Circle(
-			ofRandom(width), ofRandom(height), // posX, posY
-			ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
-			ofRandom(10, 10) // radius
-		);
 
-		circles.push_back(c);
-    }
+
+	elapsed = startTime = 0.f;
+	timeStarted = false;
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	if (ofGetMousePressed())
+
+	for (int i = 0; i < circles.size(); )
 	{
-		for (int i = 0; i < 10; i++)
+		if (circles[i]->isMouseTouched() && ofGetMousePressed())
 		{
-			Circle* c = new Circle(
-				ofGetMouseX(), ofGetMouseY(), // posX, posY
-				ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
-				ofRandom(10, 10) // radius
-			);
-			circles.push_back(c);
-		}
-
-	}
-
-
-	// Method 1
-    for (auto it = circles.begin(); it != circles.end(); )
-    {
-		auto c = *it;
-
-		if (c->toDie())
-		{
-			delete c;
-			it = circles.erase(it);
+			delete circles[i];
+			circles[i] = circles.back();
+			circles.pop_back();
 		}
 		else
 		{
-			c->update();
-			++it;
+			circles[i]->update();
+			++i;
 		}
-    }
-
-
-
-	// Method 2
-	// for (int i = 0; i < circles.size(); )
-	// {
-	// 	if (circles[i]->toDie())
-	// 	{
-	// 		delete circles[i];
-	// 		circles[i] = circles.back();
-	// 		circles.pop_back();
-	// 	}
-	// 	else
-	// 	{
-	// 		circles[i]->update();
-	// 		++i;
-	// 	}
-	// }
+	}
 
 
 }
@@ -98,6 +58,19 @@ void ofApp::draw(){
 	ofDrawBitmapStringHighlight("Number of circles: " + ofToString(circles.size()), 10, 20);
 	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 40);
 
+	if (circles.size() <= 0) timeStarted = false;
+
+	if (timeStarted)
+	{
+		elapsed = ofGetElapsedTimef() - startTime;
+		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
+	}
+	else
+	{
+		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
+		ofDrawBitmapStringHighlight("Press Spacebar to start timer!", 10, 80);
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -112,6 +85,23 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
+	if (key == ' ')
+	{
+		startTime = ofGetElapsedTimef();
+		timeStarted = true;
+
+		for (int i = 0; i < NUM; i++)
+		{
+			Circle* c = new Circle(
+				ofRandom(width), ofRandom(height), // posX, posY
+				ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
+				ofRandom(30, 100) // radius
+			);
+
+			circles.push_back(c);
+		}
+	}
 
 }
 

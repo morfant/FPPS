@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#define NUM 100
+#define NUM 10
 
 
 class Shape {
@@ -64,7 +64,7 @@ class Circle : public Shape {
 			lifeSpan = radius;
 			age = 0;
 
-			col = ofColor(ofRandom(100, 120), ofRandom(180, 200), ofRandom(200, 240), 50);
+			col = ofColor(ofRandom(100, 120), ofRandom(180, 200), ofRandom(200, 240), 200);
 			colChanged = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
 
@@ -83,8 +83,8 @@ class Circle : public Shape {
 			posX += speedX;
 			posY += speedY;
 
-			age += 0.1;
-			radius = lifeSpan - age;
+			// age += 0.1;
+			// radius = lifeSpan - age;
 
 			// reappear from the opposite side
 			if (posX - radius >= width) { posX = 0 - radius; }
@@ -155,5 +155,8 @@ class ofApp : public ofBaseApp{
 
 		int width, height;
 		vector<Circle*> circles;
+
+		float startTime, elapsed;
+		bool timeStarted;
 
 };
