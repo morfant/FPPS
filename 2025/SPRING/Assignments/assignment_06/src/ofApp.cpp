@@ -1,105 +1,42 @@
 #include "ofApp.h"
 
-int Circle::width = 0;
-int Circle::height = 0;
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(30);
-    ofSetCircleResolution(32);
+	ofSetCircleResolution(32);
+	ofSetFrameRate(30);
 
-    width = ofGetWidth();
-    height = ofGetHeight();
-
-	Circle::width = width;
-	Circle::height = height;
-
-	elapsed = startTime = 0.f;
-	timeStarted = false;
+	cc = ConcentricCircle(ofGetWidth() * 0.5, ofGetHeight() * 0.5, 100);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-
-	for (int i = 0; i < circles.size(); )
+	if (ofGetMousePressed())
 	{
-		if (circles[i]->isMouseTouched() && ofGetMousePressed())
-		{
-			delete circles[i];
-			circles[i] = circles.back();
-			circles.pop_back();
-		}
-		else
-		{
-			circles[i]->update();
-			++i;
-		}
+		cc.setPosX(ofGetMouseX());
+		cc.setPosY(ofGetMouseY());
 	}
-
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    ofBackground(255);
+	ofBackground(255);
 
-    for (int i = 0; i < circles.size(); i++)
-    {
-        circles[i]->draw();
-    }
-
-
-	ofDrawBitmapStringHighlight("Number of circles: " + ofToString(circles.size()), 10, 20);
-	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 40);
-
-	if (circles.size() <= 0) timeStarted = false;
-
-	if (timeStarted)
-	{
-		elapsed = ofGetElapsedTimef() - startTime;
-		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
-	}
-	else
-	{
-		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
-		ofDrawBitmapStringHighlight("Press Spacebar to start timer!", 10, 80);
-	}
+	cc.draw();
 
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
 
-	for (int i = 0; i < circles.size(); i++)
-	{
-		delete circles[i];
-	}
-
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
-	if (key == ' ')
-	{
-		startTime = ofGetElapsedTimef();
-		timeStarted = true;
-
-		for (int i = 0; i < NUM; i++)
-		{
-			Circle* c = new Circle(
-				ofRandom(width), ofRandom(height), // posX, posY
-				ofRandom(-3, 3), ofRandom(-3, 3), // speedX, speedY,
-				ofRandom(30, 100) // radius
-			);
-
-			circles.push_back(c);
-		}
-	}
 
 }
 
