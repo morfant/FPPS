@@ -17,7 +17,7 @@ class ConcentricCircle{
 			posX = x;
 			posY = y;
 			radius = rad;
-			numOfCircles = radius / 4;
+			numOfCircles = radius / 8;
 			col = ofColor(0, ofRandom(100, 120), ofRandom(150, 180));
 		}
 
