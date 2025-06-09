@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include <vector>
 
-
 class Dot {
 	private:
 		float posX, posY;

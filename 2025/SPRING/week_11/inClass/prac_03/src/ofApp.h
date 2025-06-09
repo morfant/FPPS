@@ -2,11 +2,10 @@
 #pragma once
 
 #include "ofMain.h"
-#define NUM_OF_CIRCLE 50 
 
 class Shape {
 	protected: 
-		ofColor col, col2;
+		ofColor col;
 
 	public:
 		Shape() {};
@@ -41,7 +40,6 @@ class Circle : public Shape {
 			posY = y;
 			radius = rad;
 			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
 		
 		// Constructor 3
@@ -54,7 +52,6 @@ class Circle : public Shape {
 			speedX = spdX;
 			speedY = spdY;
 			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-			col2 = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 		}
 
 		// Setter
@@ -114,13 +111,7 @@ class ofApp : public ofBaseApp{
 		void keyPressed(int key) override;
 
 		int width_, height_;
-		// Circle circles[NUM_OF_CIRCLE]; // Array for Circle object
-		// Circle* circles[NUM_OF_CIRCLE]; // Array for Circle object's pointer
 
 		vector<Circle*> circles;
-
-		// variables for timer
-		float startTime, elapsed;
-		bool timeStarted;
 		
 };

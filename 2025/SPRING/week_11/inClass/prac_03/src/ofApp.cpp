@@ -14,26 +14,21 @@ void ofApp::setup(){
     width_ = ofGetWidth();
     height_ = ofGetHeight();
 
-		// Set the values as we need.
+	// Set the values as we need.
     Circle::width = width_;
     Circle::height = height_;
 
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     Circle* c = new Circle(
-    //         ofRandom(width_),
-    //         ofRandom(height_),
-    //         ofRandom(50, 80),
-    //         ofRandom(-5, 5),
-    //         ofRandom(-5, 5)
-    //     );
+    for (int i = 0; i < 10; i++)
+    {
+        Circle* c = new Circle(
+            ofRandom(width_), ofRandom(height_),
+            ofRandom(50, 80),
+            ofRandom(-5, 5), ofRandom(-5, 5)
+        );
 
-    //     circles.push_back(c);
-    // }
+        circles.push_back(c);
+    }
 
-    // initialize the variables
-	elapsed = startTime = 0.f;
-	timeStarted = false;
 
 }
 
@@ -70,25 +65,6 @@ void ofApp::draw(){
         circles.at(i)->draw();
     }
 
-    ofSetColor(0);
-    ofDrawBitmapString(
-        "Current number of circles: " + ofToString(circles.size()), 10, 20);
-
-    ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 40);
-
-	if (circles.size() <= 0) timeStarted = false;
-
-	if (timeStarted)
-	{
-		elapsed = ofGetElapsedTimef() - startTime;
-		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
-	}
-	else
-	{
-		ofDrawBitmapStringHighlight("Timer: " + ofToString(elapsed, 2), 10, 60);
-		ofDrawBitmapStringHighlight("Press Spacebar to start timer!", 10, 80);
-	}
-
 }
 
 
@@ -108,24 +84,4 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
-    // Handle Spacebar press
-	if (key == ' ')
-	{
-		startTime = ofGetElapsedTimef();
-		timeStarted = true;
-
-		// This code was moved from setup()
-		for (int i = 0; i < 10; i++)
-		{
-			Circle* c = new Circle(
-				ofRandom(width_), ofRandom(height_), // posX, posY
-				ofRandom(30, 100), // radius
-				ofRandom(-3, 3), ofRandom(-3, 3) // speedX, speedY,
-			);
-
-			circles.push_back(c);
-		}
-		
-		
-	}
 }
