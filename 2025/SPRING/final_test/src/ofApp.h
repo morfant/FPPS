@@ -3,50 +3,65 @@
 #include "ofMain.h"
 
 class Circle {
-	private:
-		float posX, posY;
-		float radius;
-		ofColor col;
+private:
+	int posX, posY, radius;
+	ofColor col;
+	int sx, sy;
 
-	public:
-		Circle() {};
-		Circle(float x, float y, float rad)
-		{
-			posX = x;
-			posY = y;
-			radius = rad;
-			col = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-		}
+public:
+	Circle() { };
+	Circle(int x, int y, int r, ofColor c) {
+		posX = x;
+		posY = y;
+		radius = r;
+		col = c;
+		sx = ofRandom(-2, 2);
+		sy = ofRandom(-2, 2);
+	}
 
-		void draw()
-		{
-			ofSetColor(col);
-			ofDrawCircle(posX, posY, radius);
+	void draw() {		
+		col.a = 15;
+		ofSetColor(col);
+		for (int i = 0; i < radius; i++) {
+			ofDrawCircle(posX, posY, i);
 		}
+	}
+
+	
+	void update() {
+		posX += sx;
+		posY += sy;
+
+		if (posX > ofGetWidth() || posX < 0) {
+			sx *= -1;
+		}
+		if (posY > ofGetHeight() || posY < 0) {
+			sy *= -1;
+		}
+	}
+
+
 };
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
-	public:
-		void setup() override;
-		void update() override;
-		void draw() override;
-		void exit() override;
+public:
+	void setup();
+	void update();
+	void draw();
 
-		void keyPressed(int key) override;
-		void keyReleased(int key) override;
-		void mouseMoved(int x, int y ) override;
-		void mouseDragged(int x, int y, int button) override;
-		void mousePressed(int x, int y, int button) override;
-		void mouseReleased(int x, int y, int button) override;
-		void mouseScrolled(int x, int y, float scrollX, float scrollY) override;
-		void mouseEntered(int x, int y) override;
-		void mouseExited(int x, int y) override;
-		void windowResized(int w, int h) override;
-		void dragEvent(ofDragInfo dragInfo) override;
-		void gotMessage(ofMessage msg) override;
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void mouseEntered(int x, int y);
+	void mouseExited(int x, int y);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
+	void exit();
 
-
-		vector<Circle*> circles;
-
+	vector<Circle *> circles;
 };
