@@ -2,50 +2,6 @@
 
 #include "ofMain.h"
 
-class Circle {
-
-private:
-	float posX, posY;
-	float radius;
-	ofColor col;
-
-public:
-
-	Circle() {}
-	Circle(float x, float y, float rad)
-	{
-		posX = x;
-		posY = y;
-		radius = rad;
-		col = ofColor(0, 100, 200);
-	}
-
-	void show()
-	{
-		ofSetColor(col);
-		ofDrawCircle(posX, posY, radius);
-	}
-
-	bool isMouseTouched()
-	{
-		float dist = ofDist(posX, posY, ofGetMouseX(), ofGetMouseY());
-		if (dist <= radius)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	void changeColor()
-	{
-		col = ofColor(
-			col.r, col.g, col.b,
-			ofRandom(255)
-			);
-	}
-
-};
-
 class ofApp : public ofBaseApp{
 
 	public:
@@ -67,6 +23,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
 
-		vector<Circle> circles;
+		int circlenum;
+		int width, height;
+
+		int delayFrame = 12;
 
 };
