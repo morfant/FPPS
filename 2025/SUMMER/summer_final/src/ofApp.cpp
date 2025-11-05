@@ -1,36 +1,41 @@
 #include "ofApp.h"
 
+
+Circle::Circle(float x, float y, float r, ofColor c) {
+	posX = x;
+	posY = y;
+	radius = r;
+	col = c;
+}
+
+void Circle::draw() {
+	ofSetColor(col);
+	ofDrawCircle(posX, posY, radius);
+}
+
+void Circle::update() {
+	posY -= 0.3;
+}
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetCircleResolution(32);
-    ofSetFrameRate(30);
+	ofBackground(255);
+	ofSetFrameRate(30);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+	for (auto& c : circles) {
+		c.update();
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-    ofBackground(255);
-     for (int i = 0; i < 20; i++)
-     {
-         for (int j = 0; j < 20; j++)
-         {
-             if (rand() % 2)
-             {
-                 ofSetColor(0, 100, 200);
-                 ofDrawCircle(i * 60, j * 60, 20);
-             }
-         }
-     }
-
-
-
-
-
+	for (auto& c : circles) {
+		c.draw();
+	}
 }
 
 //--------------------------------------------------------------
@@ -40,9 +45,12 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (key == ' ') {
+		for (auto& c : circles) {
+			c.col.set(ofRandom(255), ofRandom(255), ofRandom(255));
+		}
+	}
 }
-
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
@@ -60,7 +68,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	float radius = ofRandom(20, 60);
+	ofColor color;
+	color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+	circles.push_back(Circle(x, y, radius, color));
 }
 
 //--------------------------------------------------------------
