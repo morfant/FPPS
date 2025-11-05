@@ -1,40 +1,41 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
 void ofApp::setup(){
-
-    ofSetFrameRate(30);
-    ofSetCircleResolution(32);
-
-    width = ofGetWidth();
-    height = ofGetHeight();
-
-    for (int i = 0; i < NUM; i++)
-    {
-        circles[i] = Circle(ofRandom(width), ofRandom(height), ofRandom(40, 120));
-    }
-
+	ofBackground(0);
+	ofSetFrameRate(3);
+	ofSetBackgroundAuto(false);
+	ofFill();
+	circlenum = 0;
+	width = ofGetWidth();
+	height = ofGetHeight();
 }
 
-//--------------------------------------------------------------
 void ofApp::update(){
-
-    for (int i = 0; i < NUM; i++)
-    {
-        circles[i].update();
-    }
+	if (ofGetMousePressed()) {
+		circlenum = 0;
+		ofBackground(0); // 화면 초기화
+	}
 }
 
-//--------------------------------------------------------------
 void ofApp::draw(){
 
-    ofBackground(255);
+	if (ofGetFrameNum() > delayFrame && circlenum < 5){  // 0부터 시작이니까 <5로
+		float x = ofRandom(ofGetWidth());
+		float y = ofRandom(ofGetHeight());
+		float r = ofRandom(30, 80);
 
-    for (int i = 0; i < NUM; i++)
-    {
-        circles[i].draw();
-    }
+		ofSetColor(ofRandom(255), ofRandom(255), ofRandom(255), 50);
 
+		int numOfCircles = r / 4;
+		float step = r / numOfCircles;
+
+		for (int j = 0; j < numOfCircles; j++) {
+			float rad = step * (j + 1);
+			ofDrawCircle(x, y, rad);
+		}
+
+		circlenum++;
+	}
 }
 
 //--------------------------------------------------------------
