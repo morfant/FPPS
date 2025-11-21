@@ -3,105 +3,81 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+
     ofSetCircleResolution(32);
-    ofSetFrameRate(30);
+
     width = ofGetWidth();
     height = ofGetHeight();
-
-
-
-    // mx = -1;
-    // my = -1;
-    // isMouseOver = false;
-
     radius = 100;
-    circleX = 400;
-    circleY = 400;
+    isMouseOver = false;
+
+    circleX = 100;
+    circleY = 100;
     speedX = 5;
     speedY = 5;
 
-    ofBackground(255);
+
+    ofSetFrameRate(20);
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-    float diffX = ofGetMouseX() - circleX;
-    float diffY = ofGetMouseY() - circleY;
-    float dist = sqrt(diffX * diffX + diffY * diffY);
+    float diffX = ofGetMouseX() - (width * 0.5);
+    float diffY = ofGetMouseY() - (height * 0.5);
 
-    if (dist <= radius) {
-        isMouseOver = true;
-    } else {
+    float dist = sqrt( (diffX * diffX) + (diffY * diffY));
+
+    if (dist > radius) {
         isMouseOver = false;
+    } else {
+        isMouseOver = true;
     }
 
 
-    circleX += speedX;
-    circleY += speedY;
+    circleX = circleX + speedX;
+    circleY = circleY + speedY;
 
-    if (circleX - radius <= 0)
+    if (circleX + radius > width || circleX - radius < 0)
     {
-        speedX *= -1;
+        speedX = speedX * -1;
     }
 
-    if (circleX + radius >= width)
+
+    if (circleY + radius > height || circleY - radius < 0)
     {
-        speedX *= -1;
+        speedY = speedY * -1;
     }
 
-    if (circleY + radius >= height || circleY - radius <= 0)
-    {
-        speedY *= -1;
-    }
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    // ofSetColor(255, 0, 0);
-    // ofNoFill();
-    // ofDrawCircle(100, 100, 100);
-
-    // ofFill();
-    // ofSetColor(0, 0, 255);
-    // ofDrawRectangle(300, 300, 100, 100);
-
-    // ofSetColor(0, 200, 100);
-    // ofDrawLine(0, 0, width, height);
-
-    // ofSetColor(0, 100, 200);
-    // ofDrawLine(0, height, width, 0);
-
-    // ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate(), 2), 10, 20);
-
-    // if (mx != -1 && my != -1)
-    // {
-    //     ofSetColor(255, 100, 100);
-    //     ofDrawCircle(mx, my, 10);
+    ofBackground(255);
+    // if (isMouseOver) {
+    //     ofSetColor(0, 100, 200);
+    // } else {
+    //     ofSetColor(255);
     // }
+    // ofDrawCircle(width * 0.5, height * 0.5, radius);
 
     for (int i = 0; i < 800; i++)
     {
-        // ofSetColor(ofRandom(255), (circleX/width) * 255, (circleY/height) * 255);
-        ofSetColor(ofRandom(255));
-        // ofDrawRectangle(ofRandom(-100, width + 100), ofRandom(-100, height + 100), ofRandom(300), ofRandom(300));
-        ofDrawLine(
-            ofRandom(-300, width + 300), ofRandom(-300, height + 300),
-            ofRandom(-300, width + 300), ofRandom(-300, height + 300));
+        ofSetColor(ofRandom(10, 110), (circleX/width)*255, (circleY/height)*255);
+        ofDrawCircle(
+            ofRandom(-200, width + 200),
+            ofRandom(-200, height + 200),
+            ofRandom(10, 80)
+        );
     }
 
+    ofDrawCircle(circleX, circleY, radius);
 
-    ofSetColor(100, 200, 100);
-    if (isMouseOver)
-    {
-        ofSetColor(0, 0, 255, 10);
-    }
-    // ofDrawCircle(width * 0.5, height * 0.5, 100, 100);
-
-    // ofDrawCircle(circleX, circleY, radius);
 
 
 }

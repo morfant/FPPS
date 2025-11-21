@@ -25,12 +25,5 @@ class ofApp : public ofBaseApp{
 
 
 		int width, height;
-		int mx, my;
-
-		bool isMouseOver;
-
-		float circleX, circleY;
-		float speedX, speedY;
-		float radius;
 		
 };

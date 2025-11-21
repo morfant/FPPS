@@ -23,14 +23,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo) override;
 		void gotMessage(ofMessage msg) override;
 
-
 		int width, height;
-		int mx, my;
-
+		float radius;
 		bool isMouseOver;
 
 		float circleX, circleY;
 		float speedX, speedY;
-		float radius;
 		
 };
