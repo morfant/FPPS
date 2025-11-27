@@ -4,10 +4,22 @@
 void ofApp::setup()
 {
 
+    ofSetCircleResolution(32);
+    ofSetFrameRate(30);
     width = ofGetWidth();
     height = ofGetHeight();
 
-    ofSetCircleResolution(32);
+
+
+    // mx = -1;
+    // my = -1;
+    // isMouseOver = false;
+
+    radius = 100;
+    circleX = 400;
+    circleY = 400;
+    speedX = 5;
+    speedY = 5;
 
     ofBackground(255);
 
