@@ -66,17 +66,32 @@ void ofApp::draw(){
     // }
     // ofDrawCircle(width * 0.5, height * 0.5, radius);
 
-    for (int i = 0; i < 800; i++)
-    {
-        ofSetColor(ofRandom(10, 110), (circleX/width)*255, (circleY/height)*255);
-        ofDrawCircle(
-            ofRandom(-200, width + 200),
-            ofRandom(-200, height + 200),
-            ofRandom(10, 80)
-        );
-    }
+    // for (int i = 0; i < 800; i++)
+    // {
+    //     ofSetColor(ofRandom(10, 110), (circleX/width)*255, (circleY/height)*255);
+    //     ofDrawCircle(
+    //         ofRandom(-200, width + 200),
+    //         ofRandom(-200, height + 200),
+    //         ofRandom(10, 80)
+    //     );
+    // }
 
-    ofDrawCircle(circleX, circleY, radius);
+    // ofDrawCircle(circleX, circleY, radius);
+
+
+
+    ofSetColor(0, 0, 255);
+    int side = 200;
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            if (ofRandom(1.0) > 0.5) {
+                ofDrawCircle(j * side, i * side, 50);
+            }
+            
+        }
+    }
 
 
 
