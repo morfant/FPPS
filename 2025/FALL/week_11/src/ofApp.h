@@ -1,20 +1,23 @@
 #pragma once
 
 #include "ofMain.h"
+#define NUM_CIRCLE 100
 
 class Shape {
 
 protected:
 	ofColor col, colTouched;
 
+	// Make alpha 0 to hide
 	void hide()
 	{
 		col.a = 0;
 	}
 
+	// Restore alpha to show
 	void unHide()
 	{
-		col.a = 255;
+		col.a = 180;
 	}
 
 public:
@@ -25,12 +28,13 @@ public:
 class Circle : public Shape {
 
 private:
-	// member variables
+	// Circle position and size
 	float posX, posY, radius;
+	// Movement speed
 	float speedX, speedY;
 
 public:
-	// constructor
+	// Create circle with position and radius
 	Circle(float x, float y, float rad) {
 		posX = x;
 		posY = y;
@@ -47,11 +51,18 @@ public:
 	Circle() { };
 
 
-	// member functions
+	// Change radius
 	void setRadius(float rad) {
 		radius = rad;
 	}
 
+	// Change color
+	void setColor(int r, int g, int b)
+	{
+		col = ofColor(r, g, b);
+	}
+
+	// Move using speed
 	void move() {
 		posX = posX + speedX;
 		posY = posY + speedY;
@@ -68,6 +79,7 @@ public:
 
 	}
 
+	// Draw circle on screen
 	void show() {
 		ofFill();
 
@@ -82,6 +94,7 @@ public:
 		ofDrawCircle(posX, posY, radius);
 	}
 
+	// Check if mouse is inside circle
 	bool isMouseTouched() {
 		float dist = ofDist(posX, posY, ofGetMouseX(), ofGetMouseY());
 
@@ -99,7 +112,10 @@ public:
 	void setup() override;
 	void update() override;
 	void draw() override;
+	void exit() override;
 
 	int width, height;
-	Circle cir1;
+	int numCircles;
+	Circle* circles;
+
 };

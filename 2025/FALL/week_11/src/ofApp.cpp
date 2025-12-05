@@ -1,39 +1,64 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 
-    ofSetCircleResolution(32);
-    ofSetFrameRate(30);
+	// Number of segments for smoother circles
+	ofSetCircleResolution(32);
+	// Fix the frame rate
+	ofSetFrameRate(30);
 
-    width = ofGetWidth();
-    height = ofGetHeight();
+	// Store current window size
+	width = ofGetWidth();
+	height = ofGetHeight();
 
-    cir1 = Circle(width * 0.5, height * 0.5, 100);
+	// Ask console for number of circles
+	std::cout << "How many circles? ";
+	std::cin >> numCircles;
 
+	// Allocate circle array
+	circles = new Circle[numCircles];
+
+	// Place all circles at screen center
+	for (int i = 0; i < numCircles; i++) {
+		circles[i] = Circle(width * 0.5, height * 0.5, 100);
+	}
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
 
-    if (ofGetMousePressed() == true)
-    {
-        cir1.setRadius(ofRandom(10, 200));
-    }
+	// On mouse press, randomize radius
+	if (ofGetMousePressed()) {
+		for (int i = 0; i < numCircles; i++) {
+			circles[i].setRadius(ofRandom(50, 100));
+		}
+	}
 
-    cir1.move();
-
+	// Move every circle
+	for (int i = 0; i < numCircles; i++) {
+		circles[i].move();
+	}
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
 
-    ofBackground(255, 255, 255);
+	// Fill background white
+	ofBackground(255, 255, 255);
 
-    cir1.show();
+	// Draw all circles
+	for (int i = 0; i < numCircles; i++) {
+		circles[i].show();
+	}
 
-    ofDrawBitmapStringHighlight(
-        "FPS: " + ofToString(ofGetFrameRate(), 2), 10, 20);
-
+	ofDrawBitmapStringHighlight(
+		"FPS: " + ofToString(ofGetFrameRate(), 2), 10, 20);
 }
 
+
+//--------------------------------------------------------------
+void ofApp::exit() {
+	// Free allocated memory
+	delete[] circles;
+}
