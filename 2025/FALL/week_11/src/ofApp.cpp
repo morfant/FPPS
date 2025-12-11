@@ -12,60 +12,87 @@ void ofApp::setup() {
 	width = ofGetWidth();
 	height = ofGetHeight();
 
-	// Ask console for number of circles
-	std::cout << "How many green circles? ";
-	std::cin >> numCirclesGreen;
-
-	std::cout << "How many blue circles? ";
-	std::cin >> numCirclesBlue;
-
-	total = numCirclesGreen + numCirclesBlue;
-
 	// Allocate circle array
-	circles = new Circle[total];
 
-	for (int i = 0; i < numCirclesGreen; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		circles[i] = Circle(width * 0.5, height * 0.5, 100);
-		circles[i].setColor(10, 180, 50);
+		Circle c = Circle(width * 0.5, height * 0.5, 100);
+		circles.push_back(c);
 	}
 
-	for (int i = numCirclesGreen; i < total; i++)
-	{
-		circles[i] = Circle(width * 0.5, height * 0.5, 100);
-		circles[i].setColor(10, 50, 200);
-	}
 
-	for (int i = 0; i < total; i++) {
-		int a = (int)ofRandom(total) % total;
-		int b = (int)ofRandom(total) % total;
-		Circle tmp = circles[a];
-		circles[a] = circles[b];
-		circles[b] = tmp;
-	}
+	// circles = new Circle[total];
+
+	// for (int i = 0; i < numCirclesGreen; i++)
+	// {
+	// 	circles[i] = Circle(width * 0.5, height * 0.5, 100);
+	// 	circles[i].setColor(10, 180, 50);
+	// }
+
+	// for (int i = numCirclesGreen; i < total; i++)
+	// {
+	// 	circles[i] = Circle(width * 0.5, height * 0.5, 100);
+	// 	circles[i].setColor(10, 50, 200);
+	// }
+
+	// for (int i = 0; i < total; i++) {
+	// 	int a = (int)ofRandom(total) % total;
+	// 	int b = (int)ofRandom(total) % total;
+	// 	Circle tmp = circles[a];
+	// 	circles[a] = circles[b];
+	// 	circles[b] = tmp;
+	// }
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 
 	// On mouse press, randomize radius
-	if (ofGetMousePressed()) {
-		for (int i = 0; i < total; i++) {
-			circles[i].setRadius(ofRandom(50, 100));
-		}
+	// if (ofGetMousePressed()) {
+	// 	for (int i = 0; i < circles.size(); i++) {
+	// 		circles.at(i).setRadius(ofRandom(50, 100));
+	// 	}
 
-		// for (int i = 0; i < numCirclesBlue; i++) {
-		// 	circlesBlue[i].setRadius(ofRandom(50, 100));
-		// }
-	}
-
-	// Move every circle
-	// for (int i = 0; i < numCirclesGreen; i++) {
-	// 	circlesGreen[i].move();
+	// 	// for (int i = 0; i < numCirclesBlue; i++) {
+	// 	// 	circlesBlue[i].setRadius(ofRandom(50, 100));
+	// 	// }
 	// }
 
-	for (int i = 0; i < total; i++) {
-		circles[i].move();
+	if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT))
+	{
+		bool isAnyCircleTouched = false;
+		for (int i = 0; i < circles.size(); i++)
+		{
+			if (circles.at(i).isMouseTouched() == true)
+			{
+				isAnyCircleTouched = true;
+				break;
+			}
+		}
+
+		if (isAnyCircleTouched == false)
+		{
+			Circle c = Circle(ofGetMouseX(), ofGetMouseY(), 100);
+			circles.push_back(c);
+		}
+	}
+
+	if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) 
+	{
+		for (int i = 0; i < circles.size();)
+		{
+			if (circles.at(i).isMouseTouched() == true)
+			{
+				circles.at(i) = circles.back();
+				circles.pop_back();
+			} else {
+				i++;
+			}
+		}
+	}
+
+	for (int i = 0; i < circles.size(); i++) {
+		circles.at(i).move();
 	}
 }
 
@@ -76,8 +103,8 @@ void ofApp::draw() {
 	ofBackground(255, 255, 255);
 
 	// Draw all circles
-	for (int i = 0; i < total; i++) {
-		circles[i].show();
+	for (int i = 0; i < circles.size(); i++) {
+		circles.at(i).show();
 	}
 
 	// for (int i = 0; i < numCirclesBlue; i++) {
@@ -88,12 +115,15 @@ void ofApp::draw() {
 
 	ofDrawBitmapStringHighlight(
 		"FPS: " + ofToString(ofGetFrameRate(), 2), 10, 20);
+
+	ofDrawBitmapStringHighlight(
+		"The number of circles: " + ofToString(circles.size()), 10, 40);
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
 	// Free allocated memory
-	delete[] circles;
+	// delete[] circles;
 	// delete[] circlesGreen;
 	// delete[] circlesBlue;
 }

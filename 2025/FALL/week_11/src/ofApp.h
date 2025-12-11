@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include <vector>
 #define NUM_CIRCLE 100
 
 class Shape {
@@ -84,12 +85,12 @@ public:
 		ofFill();
 
 		ofSetColor(col);
-		if (isMouseTouched() == true) {
-			// ofSetColor(colTouched);
-			hide();
-		} else {
-			unHide();
-		}
+		// if (isMouseTouched() == true) {
+		// 	// ofSetColor(colTouched);
+		// 	hide();
+		// } else {
+		// 	unHide();
+		// }
 
 		ofDrawCircle(posX, posY, radius);
 	}
@@ -118,8 +119,10 @@ public:
 	int numCirclesGreen, numCirclesBlue, total;
 
 
-	Circle* circlesGreen;
-	Circle* circlesBlue;
-	Circle* circles;
+	// Circle* circlesGreen;
+	// Circle* circlesBlue;
+	// Circle* circles;
+
+	std::vector<Circle> circles;
 
 };
