@@ -115,7 +115,11 @@ public:
 	void exit() override;
 
 	int width, height;
-	int numCircles;
+	int numCirclesGreen, numCirclesBlue, total;
+
+
+	Circle* circlesGreen;
+	Circle* circlesBlue;
 	Circle* circles;
 
 };
